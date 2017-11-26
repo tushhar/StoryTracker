@@ -1,0 +1,8 @@
+{
+  "name": "MLR",
+  "description": "scrum",
+  "repository": "https://github.com/tushhar/StoryTracker",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
