@@ -107,6 +107,6 @@ ws.put('/defect/:idn',jsonParser, (req, res) => {
     
     });
 
-ws.listen ( 5000, () => {
+ws.listen ( process.env.PORT || 5000, () => {
     console.log ( "web api runnin on 5000") ;
 } ) ;
