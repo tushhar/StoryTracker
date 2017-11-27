@@ -25,10 +25,10 @@ ws.use (  ( req, res, next ) => {
 });
 
  defects =[
-    {idn:1,story:"asd",developer:"dev" 	,tester:"test", 	analysis:true ,	coding:false 	,testing:false ,	done:false},
-    {idn:2,story:"asd",developer:"dev2" 	,tester:"test", 	analysis:false ,	coding:true 	,testing:false ,	done:false},
-    {idn:3,story:"asd",developer:"dev3" 	,tester:"test", 	analysis:true ,	coding:false 	,testing:false ,	done:false},
-    {idn:4,story:"asd",developer:"dev4" 	,tester:"test", 	analysis:false ,	coding:false 	,testing:false ,	done:true}  
+    {idn:1,story:"asd",developer:"dev" 	,tester:"test", 	analysis:true ,	coding:false 	,testing:false ,	done:false,block:false},
+    {idn:2,story:"asd",developer:"dev2" 	,tester:"test", 	analysis:true ,	coding:true 	,testing:false ,	done:false,block:false},
+    {idn:3,story:"asd",developer:"dev3" 	,tester:"test", 	analysis:true ,	coding:false 	,testing:false ,	done:false,block:false},
+    {idn:4,story:"asd",developer:"dev4" 	,tester:"test", 	analysis:true ,	coding:true 	,testing:true ,	done:true,block:false}  
   ];
 
 // read
@@ -54,6 +54,7 @@ ws.put('/defect/:idn',jsonParser, (req, res) => {
         f.coding = req.body.coding;
         f.testing = req.body.testing;
         f.done = req.body.done;
+        f.block = req.body.block;
         defects[bi]=f;
         // send a copy of the modified object back to the caller
         res.send(f);
@@ -94,7 +95,7 @@ ws.put('/defect/:idn',jsonParser, (req, res) => {
         console.log("POST defect: " + id);
 
         // build the new defect object
-        let new_defect = {"idn": id, "story": req.body.story, "developer": req.body.developer, "tester": req.body.tester, "analysis": req.body.analysis, "coding": req.body.coding, "testing": req.body.testing, "done": req.body.done};
+        let new_defect = {"idn": id, "story": req.body.story, "developer": req.body.developer, "tester": req.body.tester, "analysis": req.body.analysis, "coding": req.body.coding, "testing": req.body.testing, "done": req.body.done, "block": req.body.block};
     
         // "save" the data by adding it to the "defects" array in memory
         defects.push(new_defect);

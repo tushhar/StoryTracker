@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<story [defects]=\"defects\" \n(delete)=\"deleteDefect($event.defect)\"\n(update)=\"updateDefect($event.defect)\"\n></story>\n<button (click)=\"addRow()\">ADD</button>\n"
+module.exports = "<story [defects]=\"defects\" \n(delete)=\"deleteDefect($event.defect)\"\n(update)=\"updateDefect($event.defect)\"\n></story>\n<!-- <button (click)=\"addRow()\">ADD</button> -->\n<a class=\"btn-floating btn-medium waves-effect waves-light pulse red\" style=\"float: right\" (click)=\"addRow()\"><i class=\"material-icons\">+</i></a>\n"
 
 /***/ }),
 
@@ -106,7 +106,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.addRow = function () {
         var _this = this;
-        var defect = { idn: "", story: "new", developer: "", tester: "", analysis: true, coding: false, testing: false, done: false };
+        var defect = { idn: "", story: "new", developer: "", tester: "", analysis: true, coding: false, testing: false, done: false, block: false };
         this._storyService.createDefect(defect).subscribe(function (data) {
             // refresh the list
             _this.getDefects();
@@ -202,7 +202,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/story/story.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"table-bordered\">\n    \n      <tr>\n        <th>Story</th>\n        <th>Developer</th>\n        <th>Tester</th>\n        <th>Analysis</th>\n        <th>Coding</th>\n        <th>Testing</th>\n        <th>Done</th>\n        <th>Actions</th>\n      </tr>\n    \n      <tr *ngFor=\"let defect of defects;let bi = index\">\n        <td>\n          <input type=\"text\" style=\"width:92%\" [(ngModel)]=\"defect.story\" class=\"form-control\" />\n        </td>\n        \n        <td>\n          <input type=\"text\" style=\"width:92%\" [(ngModel)]=\"defect.developer\" class=\"form-control\" />\n        </td>\n    \n        <td>\n          <input type=\"text\" style=\"width:92%\" [(ngModel)]=\"defect.tester\" class=\"form-control\" />\n        </td>\n      <td>\n          <button style=\"width:95%\" [style.background]=\" (defect.analysis) ?'#42f445':'#f44141'\" (click)=\"selectAnalysis(defect)\">&nbsp;&nbsp;</button>\n        </td>\n        <td>\n            <button style=\"width:95%\" [style.background]=\" (defect.coding) ?'#42f445':'#f44141'\" (click)=\"selectCoding(defect)\">&nbsp;&nbsp;</button>\n          </td>\n          <td>\n              <button style=\"width:95%\" [style.background]=\" (defect.testing) ?'#42f445':'#f44141'\" (click)=\"selectTesting(defect)\">&nbsp;&nbsp;</button>\n         </td>\n         <td>\n            <button style=\"width:95%\" [style.background]=\" (defect.done) ?'#42f445':'#f44141'\" (click)=\"selectDone(defect)\">&nbsp;&nbsp;</button>\n       </td>\n       <td>\n        <button style=\"width:45%\" (click)=\"deleteMe(defect)\">Delete&nbsp;&nbsp;</button>\n        <button style=\"width:45%\" (click)=\"updateMe(defect)\">Update&nbsp;&nbsp;</button>\n   </td>\n\n      </tr>\n    \n    </table>\n    \n    <style>\n  \n        th,td {\n          border: 1px solid black;\n          min-width: 150px\n          \n        }\n        .button {\n    \n    border: none;\n    color: white;\n    padding: 15px 32px;\n    text-align: center;\n    text-decoration: none;\n    display: inline-block;\n    font-size: 16px;\n    margin: 4px 2px;\n    cursor: pointer;\n}\n        </style>"
+module.exports = "<div class=\"card-panel\">Sprint progress  <div class=\"progress\"><div class=\"determinate\" [style.width]=\"percentageofdone + '%'\"></div>\n</div>\n</div>\n\n<div class=\"card-panel\">\n\n<table class=\"striped \">\n    \n      <tr>\n        <th>Story</th>\n        <th>Developer</th>\n        <th>Tester</th>\n        <th> Analysis</th>\n        <th> Coding</th>\n        <th>&nbsp;&nbsp;Testing</th>\n        <th>&nbsp;&nbsp;Done</th>\n        <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Actions</th>\n        <th>&nbsp;&nbsp;&nbsp;&nbsp;Block</th>\n      </tr>\n    \n      <tr *ngFor=\"let defect of defects;let bi = index\">\n        <td>\n          <input type=\"text\" size=\"15\" maxlength=\"15\" [(ngModel)]=\"defect.story\" class=\"form-control\" />\n        </td>\n        \n        <td>\n          <input type=\"text\" size=\"15\" maxlength=\"15\" [(ngModel)]=\"defect.developer\" class=\"form-control\" />\n        </td>\n    \n        <td>\n          <input type=\"text\" size=\"15\" maxlength=\"15\" [(ngModel)]=\"defect.tester\" class=\"form-control\" />\n        </td>\n      <td>\n          <button class=\"btn waves-effect waves-light\" [style.background]=\" (defect.analysis) ?'#42f445':'#adb0b5'\" (click)=\"selectAnalysis(defect)\">&nbsp;&nbsp;&nbsp;&nbsp;</button>\n        </td>\n        <td>\n            <button class=\"btn waves-effect waves-light\" [style.background]=\" (defect.coding) ?'#42f445':'#adb0b5'\" (click)=\"selectCoding(defect)\">&nbsp;&nbsp;&nbsp;&nbsp;</button>\n          </td>\n          <td>\n              <button class=\"btn waves-effect waves-light\" [style.background]=\" (defect.testing) ?'#42f445':'#adb0b5'\" (click)=\"selectTesting(defect)\">&nbsp;&nbsp;&nbsp;&nbsp;</button>\n         </td>\n         <td>\n            <button class=\"btn waves-effect waves-light\" [style.background]=\" (defect.done) ?'#42f445':'#adb0b5'\" (click)=\"selectDone(defect)\">&nbsp;&nbsp;&nbsp;&nbsp;</button>\n       </td>\n       <td>\n        <!-- <a class=\"waves-effect waves-light btn\" (click)=\"deleteMe(defect)\">Delete</a><br/>\n        <a class=\"waves-effect waves-light btn\" (click)=\"updateMe(defect)\">Update</a> -->\n        <button class=\"btn\" (click)=\"deleteMe(defect)\">Delete</button>\n        <button class=\"btn\" (click)=\"updateMe(defect)\">Update</button>\n        \n   </td>\n   <td>\n      <button class=\"btn waves-effect waves-light\" [style.background]=\" !(defect.block) ?'#adb0b5':'#f44141'\" (click)=\"blockMe(defect)\">Block</button>\n   </td>\n\n      </tr>\n    \n    </table>\n \n   \n  </div>"
 
 /***/ }),
 
@@ -224,41 +224,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var StoryComponent = (function () {
     function StoryComponent() {
+        this.numberofdone = 0;
+        this.numberofanalysis = 0;
+        this.numberoftesting = 0;
+        this.numberofcoding = 0;
+        this.percentageofdone = 0;
         this.delete = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
         this.update = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
+        this.block = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
     }
     StoryComponent.prototype.ngOnInit = function () {
     };
     StoryComponent.prototype.selectAnalysis = function (defect) {
+        defect.block = false;
         defect.analysis = true;
         defect.coding = false;
         defect.done = false;
         defect.testing = false;
-        // this.update.emit({defect:defect});
+        this.updateMe(defect);
     };
     ;
     StoryComponent.prototype.selectCoding = function (defect) {
-        defect.analysis = false;
+        defect.block = false;
+        defect.analysis = true;
         defect.coding = true;
         defect.done = false;
         defect.testing = false;
-        // this.update.emit({defect:defect});
+        this.updateMe(defect);
     };
     ;
     StoryComponent.prototype.selectTesting = function (defect) {
-        defect.analysis = false;
-        defect.coding = false;
+        defect.block = false;
+        defect.analysis = true;
+        defect.coding = true;
         defect.done = false;
         defect.testing = true;
-        // this.update.emit({defect:defect});
+        this.updateMe(defect);
     };
     ;
     StoryComponent.prototype.selectDone = function (defect) {
-        defect.analysis = false;
-        defect.coding = false;
+        defect.block = false;
+        defect.analysis = true;
+        defect.coding = true;
         defect.done = true;
-        defect.testing = false;
-        // this.update.emit({defect:defect});
+        defect.testing = true;
+        this.updateMe(defect);
     };
     ;
     StoryComponent.prototype.deleteMe = function (defect) {
@@ -266,9 +276,50 @@ var StoryComponent = (function () {
     };
     ;
     StoryComponent.prototype.updateMe = function (defect) {
+        this.summary();
         this.update.emit({ defect: defect });
     };
     ;
+    StoryComponent.prototype.blockMe = function (defect) {
+        if (defect.block) {
+            defect.block = false;
+            defect.analysis = true;
+        }
+        else {
+            defect.block = true;
+            defect.analysis = false;
+            defect.coding = false;
+            defect.done = false;
+            defect.testing = false;
+        }
+        this.updateMe(defect);
+    };
+    ;
+    StoryComponent.prototype.summary = function () {
+        var done = 0;
+        var testing = 0;
+        var analysis = 0;
+        var coding = 0;
+        for (var i = 0, len = this.defects.length; i < len; i++) {
+            if (this.defects[i].done) {
+                done = done + 1;
+            }
+            if (this.defects[i].analysis) {
+                analysis = analysis + 1;
+            }
+            if (this.defects[i].coding) {
+                coding = coding + 1;
+            }
+            if (this.defects[i].testing) {
+                testing = testing + 1;
+            }
+        }
+        this.numberofdone = done;
+        this.numberoftesting = testing - done;
+        this.numberofcoding = coding - testing;
+        this.numberofanalysis = analysis - coding;
+        this.percentageofdone = (this.numberofdone / this.defects.length) * 100;
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Input */])(),
         __metadata("design:type", Object)
@@ -281,6 +332,10 @@ var StoryComponent = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* Output */])(),
         __metadata("design:type", Object)
     ], StoryComponent.prototype, "update", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* Output */])(),
+        __metadata("design:type", Object)
+    ], StoryComponent.prototype, "block", void 0);
     StoryComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'story',
@@ -335,7 +390,7 @@ var StoryService = (function () {
     StoryService.prototype.updateDefect = function (defect) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        var body = JSON.stringify({ "idn": defect.idn, "story": defect.story, "developer": defect.developer, "tester": defect.tester, "analysis": defect.analysis, "coding": defect.coding, "testing": defect.testing, "done": defect.done });
+        var body = JSON.stringify({ "idn": defect.idn, "story": defect.story, "developer": defect.developer, "tester": defect.tester, "analysis": defect.analysis, "coding": defect.coding, "testing": defect.testing, "done": defect.done, "block": defect.block });
         return this.http.put('/defect/' + defect.idn, body, options).map(function (res) { return res.json(); });
         // for (var i = 0, len = this.defects.length; i < len; i++) {
         //     if(this.defects[i].idn ==defect.idn){
@@ -346,7 +401,7 @@ var StoryService = (function () {
     StoryService.prototype.createDefect = function (defect) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        var body = JSON.stringify({ "idn": defect.idn, "story": defect.story, "developer": defect.developer, "tester": defect.tester, "analysis": defect.analysis, "coding": defect.coding, "testing": defect.testing, "done": defect.done });
+        var body = JSON.stringify({ "idn": defect.idn, "story": defect.story, "developer": defect.developer, "tester": defect.tester, "analysis": defect.analysis, "coding": defect.coding, "testing": defect.testing, "done": defect.done, "block": defect.block });
         return this.http.post('/defect/', body, options).map(function (res) { return res.json(); });
     };
     StoryService = __decorate([
